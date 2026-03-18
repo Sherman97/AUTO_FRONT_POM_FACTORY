@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Maven / generic Java build outputs
+target/
+bin/
+*.class
+
+# Serenity reports and test outputs
+serenity/
+reports/
+
+# Logs
+*.log
+
+# IDEs
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environment overrides
+.env
+.env.*
+*.local
