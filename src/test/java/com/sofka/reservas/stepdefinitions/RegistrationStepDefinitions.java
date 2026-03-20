@@ -9,10 +9,10 @@ import com.sofka.reservas.tasks.AttemptRegistrationWithInvalidCorporateEmail;
 import com.sofka.reservas.tasks.OpenTheRegistrationForm;
 import com.sofka.reservas.tasks.RegisterCollaborator;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.es.Cuando;
+import io.cucumber.java.es.Dado;
+import io.cucumber.java.es.Entonces;
+import io.cucumber.java.es.Y;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
@@ -58,28 +58,28 @@ public class RegistrationStepDefinitions {
         );
     }
 
-    @Given("un colaborador no registrado requiere una cuenta de acceso")
+    @Dado("un colaborador no registrado requiere una cuenta de acceso")
     public void unColaboradorNoRegistradoRequiereUnaCuentaDeAcceso() {
         collaborator.attemptsTo(OpenTheRegistrationForm.in(registrationPage));
         assertTrue(registrationPage.isRegistrationFormVisible());
     }
 
-    @When("diligencia correctamente la informacion requerida para el registro")
+    @Cuando("diligencia correctamente la informacion requerida para el registro")
     public void diligenciaCorrectamenteLaInformacionRequeridaParaElRegistro() {
         collaborator.attemptsTo(RegisterCollaborator.withValidInformation(validCollaborator, registrationPage));
     }
 
-    @Then("la cuenta del colaborador es creada correctamente")
+    @Entonces("la cuenta del colaborador es creada correctamente")
     public void laCuentaDelColaboradorEsCreadaCorrectamente() {
         collaborator.should(seeThat(TheDashboardAccess.isAvailable(dashboardHomePage), equalTo(true)));
     }
 
-    @And("el colaborador accede exitosamente a la plataforma")
+    @Y("el colaborador accede exitosamente a la plataforma")
     public void elColaboradorAccedeExitosamenteALaPlataforma() {
         assertTrue(dashboardHomePage.currentPath().contains("/dashboard"));
     }
 
-    @When("diligencia la informacion requerida para el registro utilizando un correo corporativo invalido")
+    @Cuando("diligencia la informacion requerida para el registro utilizando un correo corporativo invalido")
     public void diligenciaLaInformacionRequeridaParaElRegistroUtilizandoUnCorreoCorporativoInvalido() {
         collaborator.attemptsTo(
             AttemptRegistrationWithInvalidCorporateEmail.using(
@@ -89,12 +89,12 @@ public class RegistrationStepDefinitions {
         );
     }
 
-    @Then("la cuenta del colaborador no es creada")
+    @Entonces("la cuenta del colaborador no es creada")
     public void laCuentaDelColaboradorNoEsCreada() {
         assertTrue(registrationPage.currentPath().contains("/signup"));
     }
 
-    @And("el sistema informa que el correo corporativo no cumple con el formato valido")
+    @Y("el sistema informa que el correo corporativo no cumple con el formato valido")
     public void elSistemaInformaQueElCorreoCorporativoNoCumpleConElFormatoValido() {
         String rawMessage = TheRegistrationErrorMessage.displayedIn(registrationPage).answeredBy(collaborator);
         assertEquals(
