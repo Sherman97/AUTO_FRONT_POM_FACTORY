@@ -1,37 +1,60 @@
 # AUTO_FRONT_POM_FACTORY
 
-Proyecto de automatización Front-End en Java con Serenity BDD, Gradle, Cucumber y una implementación híbrida de POM con Page Factory y Screenplay.
+Proyecto de automatizacion Front-End en Java con Serenity BDD, Gradle, Cucumber y una implementacion hibrida de POM (Page Object Model) con Page Factory y Screenplay.
 
-## Cobertura
+Este repositorio contiene:
+- Codigo fuente funcional de automatizacion E2E para el flujo de registro de usuarios.
+- Instrucciones de ejecucion de pruebas automatizadas en local.
+
+## Cobertura funcional automatizada
 
 - Registro exitoso de un colaborador nuevo.
-- Registro fallido por correo corporativo con formato inválido.
+- Registro fallido por correo corporativo con formato invalido.
 
-## Estructura
+## Estructura del proyecto
 
 - `src/test/resources/features`: escenarios Gherkin.
-- `src/test/java/com/sofka/reservas/pages`: páginas POM con `@FindBy`.
+- `src/test/java/com/sofka/reservas/pages`: objetos de pagina (POM) con `@FindBy`.
 - `src/test/java/com/sofka/reservas/tasks`: tareas Screenplay.
 - `src/test/java/com/sofka/reservas/questions`: validaciones Screenplay.
-- `src/test/java/com/sofka/reservas/stepdefinitions`: definición de pasos Cucumber.
+- `src/test/java/com/sofka/reservas/stepdefinitions`: definicion de pasos Cucumber.
+- `src/test/java/com/sofka/reservas/runners`: runners de ejecucion.
 
 ## Prerrequisitos
 
 - Java 17 o superior.
-- Frontend de la aplicación ejecutándose en `http://localhost:8080`.
-- Backend de autenticación ejecutándose y accesible desde el frontend.
-- Google Chrome disponible en la máquina.
+- Google Chrome instalado.
+- Aplicacion objetivo ejecutandose en `http://localhost:8080`.
 
-## Ejecución
+## Ejecucion de tests
+
+En Windows (PowerShell):
+
+```powershell
+.\gradlew.bat clean test
+```
+
+En Linux/macOS:
 
 ```bash
 ./gradlew clean test
 ```
 
-Si necesitas apuntar a otra URL base:
+## Ejecutar tests sin cache (forzar re-ejecucion)
 
-```bash
-./gradlew clean test -Dwebdriver.base.url=http://localhost:4173
+```powershell
+.\gradlew.bat clean test aggregate --rerun-tasks
 ```
 
-La URL base por defecto de la automatización está centralizada en [TestEnvironment.java](/Users/germanrojas/Desktop/sofka/reservasSofka/AUTO_FRONT_POM_FACTORY/src/test/java/com/sofka/reservas/utils/TestEnvironment.java).
+## Reportes
+
+Despues de ejecutar tests:
+
+- Reporte de Gradle: `build/reports/tests/test/index.html`
+- Reporte de Serenity: `target/site/serenity/index.html`
+
+Si ves datos antiguos en Serenity, ejecuta:
+
+```powershell
+.\gradlew.bat clean test aggregate --rerun-tasks
+```
