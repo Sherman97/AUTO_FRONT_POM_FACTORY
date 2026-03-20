@@ -38,6 +38,10 @@ tasks.withType(Test).configureEach {
     systemProperty 'webdriver.base.url', 'http://localhost:8080'
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 test {
     finalizedBy aggregate
 }

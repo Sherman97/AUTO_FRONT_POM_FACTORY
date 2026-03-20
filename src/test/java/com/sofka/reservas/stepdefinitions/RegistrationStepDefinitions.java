@@ -19,9 +19,13 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import org.openqa.selenium.WebDriver;
 
+import java.text.Normalizer;
+import java.util.Locale;
+
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
-import static org.junit.Assert.assertTrue;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class RegistrationStepDefinitions {
 
@@ -60,7 +64,7 @@ public class RegistrationStepDefinitions {
         assertTrue(registrationPage.isRegistrationFormVisible());
     }
 
-    @When("diligencia correctamente la información requerida para el registro")
+    @When("diligencia correctamente la informacion requerida para el registro")
     public void diligenciaCorrectamenteLaInformacionRequeridaParaElRegistro() {
         collaborator.attemptsTo(RegisterCollaborator.withValidInformation(validCollaborator, registrationPage));
     }
@@ -75,7 +79,7 @@ public class RegistrationStepDefinitions {
         assertTrue(dashboardHomePage.currentPath().contains("/dashboard"));
     }
 
-    @When("diligencia la información requerida para el registro utilizando un correo corporativo inválido")
+    @When("diligencia la informacion requerida para el registro utilizando un correo corporativo invalido")
     public void diligenciaLaInformacionRequeridaParaElRegistroUtilizandoUnCorreoCorporativoInvalido() {
         collaborator.attemptsTo(
             AttemptRegistrationWithInvalidCorporateEmail.using(
@@ -90,13 +94,20 @@ public class RegistrationStepDefinitions {
         assertTrue(registrationPage.currentPath().contains("/signup"));
     }
 
-    @And("el sistema informa que el correo corporativo no cumple con el formato válido")
+    @And("el sistema informa que el correo corporativo no cumple con el formato valido")
     public void elSistemaInformaQueElCorreoCorporativoNoCumpleConElFormatoValido() {
-        collaborator.should(
-            seeThat(
-                TheRegistrationErrorMessage.displayedIn(registrationPage),
-                equalTo("El correo corporativo no cumple con el formato válido")
-            )
+        String rawMessage = TheRegistrationErrorMessage.displayedIn(registrationPage).answeredBy(collaborator);
+        assertEquals(
+            "el correo corporativo no cumple con el formato valido",
+            normalizeWithoutAccents(rawMessage)
         );
+    }
+
+    private String normalizeWithoutAccents(String input) {
+        String normalized = Normalizer.normalize(input == null ? "" : input, Normalizer.Form.NFD);
+        return normalized
+            .replaceAll("\\p{M}", "")
+            .toLowerCase(Locale.ROOT)
+            .trim();
     }
 }

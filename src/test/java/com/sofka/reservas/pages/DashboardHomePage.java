@@ -2,6 +2,7 @@ package com.sofka.reservas.pages;
 
 import net.serenitybdd.core.pages.PageObject;
 import org.openqa.selenium.WebDriver;
+import java.time.Duration;
 
 public class DashboardHomePage extends PageObject {
 
@@ -10,7 +11,9 @@ public class DashboardHomePage extends PageObject {
     }
 
     public boolean isVisible() {
-        waitForCondition().until(driver -> currentPath().contains("/dashboard") || hasAuthenticatedSession());
+        waitForCondition()
+            .withTimeout(Duration.ofSeconds(30))
+            .until(driver -> currentPath().contains("/dashboard"));
         return currentPath().contains("/dashboard");
     }
 

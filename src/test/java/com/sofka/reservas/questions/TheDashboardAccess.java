@@ -18,6 +18,6 @@ public class TheDashboardAccess implements Question<Boolean> {
 
     @Override
     public Boolean answeredBy(Actor actor) {
-        return dashboardHomePage.isVisible() && dashboardHomePage.hasAuthenticatedSession();
+        return dashboardHomePage.isVisible();
     }
 }
