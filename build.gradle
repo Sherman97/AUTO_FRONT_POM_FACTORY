@@ -36,6 +36,7 @@ tasks.withType(Test).configureEach {
     useJUnit()
     systemProperty 'file.encoding', 'UTF-8'
     systemProperty 'webdriver.base.url', 'http://localhost:8080'
+    systemProperty 'serenity.take.screenshots', 'BEFORE_AND_AFTER_EACH_STEP'
 }
 
 tasks.withType(JavaCompile).configureEach {

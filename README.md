@@ -1,60 +1,60 @@
 # AUTO_FRONT_POM_FACTORY
 
-Proyecto de automatizacion Front-End en Java con Serenity BDD, Gradle, Cucumber y una implementacion hibrida de POM (Page Object Model) con Page Factory y Screenplay.
+Automatizacion E2E Front-End con Java, Serenity BDD, Cucumber y enfoque POM (con tareas Screenplay de soporte).
 
-Este repositorio contiene:
-- Codigo fuente funcional de automatizacion E2E para el flujo de registro de usuarios.
-- Instrucciones de ejecucion de pruebas automatizadas en local.
+## HU cubierta
 
-## Cobertura funcional automatizada
+- `HU-01`: Consultar reservas desde modulo administrador.
 
-- Registro exitoso de un colaborador nuevo.
-- Registro fallido por correo corporativo con formato invalido.
+## Escenarios automatizados (HU-01)
 
-## Estructura del proyecto
+- Filtros de consulta (fecha, estado, sede y usuario).
+- Ver detalle de reserva.
+- Paginacion del listado (20 resultados por pagina).
+- Escenario negativo sin resultados / validacion de filtros.
 
-- `src/test/resources/features`: escenarios Gherkin.
-- `src/test/java/com/sofka/reservas/pages`: objetos de pagina (POM) con `@FindBy`.
-- `src/test/java/com/sofka/reservas/tasks`: tareas Screenplay.
-- `src/test/java/com/sofka/reservas/questions`: validaciones Screenplay.
-- `src/test/java/com/sofka/reservas/stepdefinitions`: definicion de pasos Cucumber.
-- `src/test/java/com/sofka/reservas/runners`: runners de ejecucion.
+## Configuracion base
+
+- URL por defecto: `http://localhost:5173`
+- Login: `/login`
+- Vista admin: `/admin-reservations`
+- Credenciales admin por defecto:
+  - `prueba.admin@demo.com`
+  - `admin123`
+
+Se pueden sobrescribir por propiedades:
+
+```powershell
+.\gradlew.bat clean test -Dwebdriver.base.url=http://localhost:5173 -Dadmin.email=prueba.admin@demo.com -Dadmin.password=admin123
+```
 
 ## Prerrequisitos
 
-- Java 17 o superior.
-- Google Chrome instalado.
-- Aplicacion objetivo ejecutandose en `http://localhost:8080`.
+- Java 17+
+- Chrome instalado
+- Frontend y backend operativos
 
-## Ejecucion de tests
+## Ejecucion
 
-En Windows (PowerShell):
-
-```powershell
-.\gradlew.bat clean test
-```
-
-En Linux/macOS:
-
-```bash
-./gradlew clean test
-```
-
-## Ejecutar tests sin cache (forzar re-ejecucion)
+Windows:
 
 ```powershell
 .\gradlew.bat clean test aggregate --rerun-tasks
+```
+
+Linux/macOS:
+
+```bash
+./gradlew clean test aggregate --rerun-tasks
+```
+
+Solo runner principal:
+
+```powershell
+.\gradlew.bat test --tests com.sofka.reservas.runners.AdminReservationsRunner --rerun-tasks
 ```
 
 ## Reportes
 
-Despues de ejecutar tests:
-
-- Reporte de Gradle: `build/reports/tests/test/index.html`
-- Reporte de Serenity: `target/site/serenity/index.html`
-
-Si ves datos antiguos en Serenity, ejecuta:
-
-```powershell
-.\gradlew.bat clean test aggregate --rerun-tasks
-```
+- Gradle: `build/reports/tests/test/index.html`
+- Serenity: `target/site/serenity/index.html`
